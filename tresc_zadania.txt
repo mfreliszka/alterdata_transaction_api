@@ -1,0 +1,51 @@
+ZADANIE : System Przetwarzania i Agregacji Danych o Transakcjach
+- Kontekst: Firma Z analizuje duże ilości danych transakcyjnych pochodzących z różnych systemów. Potrzebujemy narzędzia backendowego, które pozwoli na importowanie danych o transakcjach, ich walidację, proste przetwarzanie oraz udostępnianie zagregowanych wyników poprzez API.
+
+Wymagania:
+1. Import Danych:
+- Zaimplementuj endpoint API (POST /transactions/upload), który akceptuje plik CSV z danymi transakcyjnymi.
+- Format CSV: transaction_id (UUID), timestamp (ISO 8601), amount (liczba zmiennoprzecinkowa), currency (np. PLN, EUR, USD), customer_id (UUID), product_id (UUID), quantity (liczba całkowita).
+- Dane powinny być zwalidowane (np. poprawność formatu UUID, daty, typy liczbowe, niepuste wartości dla wymaganych pól). Niepoprawne wiersze powinny być logowane/raportowane, ale nie powinny blokować przetwarzania poprawnych.
+- Po walidacji, dane powinny być zapisane w relacyjnej bazie danych. Zaprojektuj odpowiedni schemat bazy.
+
+2. API do Pobierania Danych:
+- Zaimplementuj endpoint API (GET /transactions) do pobierania listy transakcji z możliwością paginacji oraz filtrowania po customer_id i product_id.
+- Zaimplementuj endpoint API (GET /transactions/{transaction_id}) do pobierania szczegółów pojedynczej transakcji.
+
+3. Agregacja Danych:
+- Zaimplementuj endpoint API (GET /reports/customer-summary/{customer_id}), który zwróci podsumowanie dla danego klienta:
+- Całkowita kwota wydana przez klienta (w PLN – jeśli transakcje są w innych walutach, załóż stały, uproszczony kurs wymiany np. 1 EUR = 4.3 PLN, 1 USD = 4.0 PLN).
+- Liczba unikalnych produktów zakupionych przez klienta.
+- Data ostatniej transakcji klienta.
+- Zaimplementuj endpoint API (GET /reports/product-summary/{product_id}), który zwróci podsumowanie dla danego produktu:
+--> Całkowita sprzedana ilość produktu.
+--> Całkowity przychód wygenerowany przez produkt (w PLN, jak wyżej).
+--> Liczba unikalnych klientów, którzy kupili ten produkt.
+
+4. Technologie:
+- Python 3.10+, FastAPI/Django, PostgreSQL lub SQLite, SQLAlchemy/Django ORM, Pytest, Docker.
+
+5. Co będzie dodatkowym atutem (Bonus):
+- Asynchroniczne przetwarzanie importu pliku CSV (np. z użyciem Celery lub mechanizmów async FastAPI).
+- Obsługa błędów i logowanie na produkcyjnym poziomie.
+- Prosty mechanizm uwierzytelniania API (np. token w nagłówku).
+- Możliwość generowania raportów dla zakresu dat.
+
+Na co będziemy zwracać uwagę:
+
+1. Jakość kodu: Czystość, czytelność, zgodność z PEP8, dobre praktyki (np. SOLID w miarę możliwości).
+2. Architektura i projekt rozwiązania: Logiczny podział na komponenty, przemyślana struktura.
+3. Testy: Pokrycie kodu testami (jednostkowymi, integracyjnymi) jest bardzo ważne. Użyj pytest.
+4. Obsługa błędów i przypadków brzegowych: Jak Twoje rozwiązanie radzi sobie z nieoczekiwanymi danymi lub sytuacjami.
+5. Dokumentacja: Krótki opis rozwiązania w pliku README.md (jak uruchomić, jakie decyzje projektowe podjąłeś, ewentualne kompromisy).
+6. Użycie narzędzi: Poprawne wykorzystanie Gita, Dockera.
+
+Wymagania techniczne:
+
+1. Język: Python 3.10+
+2. Framework webowy: FastAPI lub Django (wybierz ten, w którym czujesz się pewniej).
+3. Baza danych: PostgreSQL lub SQLite (wybierz ten, w którym czujesz się pewniej).
+4. ORM: SQLAlchemy (dla FastAPI) lub Django ORM.
+5. Kontrola wersji: Git. Prześlij nam link do repozytorium (np. GitHub, GitLab).
+6. Konteneryzacja: Prosimy o przygotowanie Dockerfile oraz docker-compose.yml do łatwego uruchomienia aplikacji i jej zależności (np. bazy danych).
+7. Testy: pytest.

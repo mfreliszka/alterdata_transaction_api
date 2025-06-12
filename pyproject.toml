@@ -1,0 +1,35 @@
+[project]
+name = "alterdata-transaction-api"
+version = "0.1.0"
+description = "Transaction Management API"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "alembic>=1.16.1",
+    "asyncpg>=0.30.0",
+    "fastapi>=0.115.12",
+    "psycopg2-binary>=2.9.10",
+    "pydantic>=2.11.5",
+    "pydantic-settings>=2.9.1",
+    "pytest>=8.4.0",
+    "python-dotenv>=1.1.0",
+    "python-multipart>=0.0.20",
+    "ruff>=0.11.13",
+    "sqlalchemy>=2.0.41",
+    "uvicorn>=0.34.3",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = [".git", ".cache", ".mypy_cache", ".pytest_cache", ".tox", ".venv", ".idea", "**/__pycache__/**", "**/migrations/**", "src", "static", "node_modules", "binaries", "htmlcov"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+
+]
+unfixable = ["ERA"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
